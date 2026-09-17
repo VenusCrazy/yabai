@@ -36,6 +36,7 @@ Additional features of yabai include focus-follows-mouse, disabling animations f
 ## Installation and Configuration
 
 - The [&nearr;&nbsp;yabai&nbsp;wiki][yabai-wiki] has both brief and detailed installation instructions for multiple installation methods, and also explains how to uninstall yabai completely.
+- To build and install this fork on **macOS 27.0 (Apple Silicon)**, follow the step-by-step guide in [`doc/BUILD-macOS-27.md`](doc/BUILD-macOS-27.md).
 - Sample configuration files can be found in the [&nearr;&nbsp;examples][yabai-examples] directory. Refer to the [&nearr;&nbsp;documentation][yabai-docs] or the wiki for further information.
 - Keyboard shortcuts can be defined with [&nearr;&nbsp;skhd][gh-skhd] or any other suitable software you may prefer.
 

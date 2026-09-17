@@ -6,7 +6,7 @@ just want a working yabai on macOS 27, follow it top to bottom.
 
 ## What this fork changes
 
-Two things differ from upstream `asmvik/yabai`:
+Three things differ from upstream `asmvik/yabai`:
 
 1. **macOS 27 scripting-addition offsets** (`src/osax/arm64_payload.m`,
    `src/osax/common.h`, `src/osax/payload.m`).
@@ -36,6 +36,19 @@ Two things differ from upstream `asmvik/yabai`:
    macOS 26+ refuses to set it at all ([#2741][issue-2741]). This fork only
    requires it on macOS < 14.4, which makes `yabai --load-sa` work again on
    26/27.
+
+3. **Main-binary macOS 27 recognition** (`src/workspace.m`).
+   `src/workspace.h` only lists macOS versions up to Tahoe (26), and the main
+   binary matches a major version **exactly**, so on macOS 27 every
+   `workspace_is_macos_*()` predicate returned `false`. The binary then
+   silently took legacy code paths: Mission Control was never observed, the
+   space/window connection notifications (1327/1328 and 804) were not
+   registered, `update_window_notifications()` was skipped, and the window
+   sub-level query used the old message id `0x73C3` instead of `0x76E3`.
+   macOS 27 has not diverged from Tahoe in any of these paths, so this fork
+   aliases `majorVersion >= 27` to `26` before the version predicates are
+   computed, restoring the Tahoe behaviour. If Apple changes one of these APIs
+   in a later 27.x build, this is the first place to look.
 
 ## Prerequisites
 

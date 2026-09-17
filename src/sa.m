@@ -391,7 +391,11 @@ int scripting_addition_load(void)
     }
 
 #ifdef __arm64__
-    if (!scripting_addition_is_arm64e_enabled()) {
+    NSOperatingSystemVersion os_version = [[NSProcessInfo processInfo] operatingSystemVersion];
+    bool needs_arm64e_preview_abi = (os_version.majorVersion < 14) ||
+                                    (os_version.majorVersion == 14 && os_version.minorVersion < 4);
+
+    if (needs_arm64e_preview_abi && !scripting_addition_is_arm64e_enabled()) {
         warn("yabai: missing required nvram boot-arg '-arm64e_preview_abi'!\n");
         notify("scripting-addition", "missing required nvram boot-arg '-arm64e_preview_abi'!");
         result = 1;
